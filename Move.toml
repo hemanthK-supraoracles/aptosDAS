@@ -1,0 +1,22 @@
+[package]
+name = "aptosDAS"
+version = "1.0.0"
+authors = []
+
+[addresses]
+CAFE = "0xf51a62cba3bd6fe0d5e270633e44f71404c80d616fc304c015ccc4e749f82b83"
+
+[dev-addresses]
+
+
+
+[dependencies.AptosFramework]
+git = "https://github.com/aptos-labs/aptos-core.git"
+rev = "main"
+subdir = "aptos-move/framework/aptos-framework"
+
+[dependencies.AptosTokenObjects]
+git = "https://github.com/aptos-labs/aptos-core.git"
+rev = "main"
+subdir = "aptos-move/framework/aptos-token-objects"
+[dev-dependencies]
