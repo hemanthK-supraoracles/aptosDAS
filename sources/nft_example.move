@@ -176,7 +176,7 @@ module CAFE::nft_example {
 
     // Burn an NFT
     public entry fun burn_nft(
-        owner: &signer, token_obj: address
+        owner: &signer, token_addr: address
     ) acquires CollectionMetadata, CustomData {
         let owner_addr = signer::address_of(owner);
         let token_obj = object::address_to_object<token::Token>(token_addr);
