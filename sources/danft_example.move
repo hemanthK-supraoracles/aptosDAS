@@ -1,4 +1,4 @@
-module CAFE::nft_example {
+module CAFE::danft_example {
     use std::error;
     use std::signer;
     use std::string::{Self, String};
@@ -8,7 +8,7 @@ module CAFE::nft_example {
     use aptos_framework::account;
     use aptos_framework::timestamp;
     use 0x4::collection;
-    use 0x4::token;
+    use 0x4::token::{Self, Token};
     use 0x1::object::{Self, Object};
     use aptos_token_objects::token::{BurnRef};
 
@@ -176,30 +176,28 @@ module CAFE::nft_example {
 
     // Burn an NFT
     public entry fun burn_nft(
-        owner: &signer, token_addr: address
+        owner: &signer, token: Object<Token>, collection_owner: address,
     ) acquires CollectionMetadata, CustomData {
         let owner_addr = signer::address_of(owner);
-        let token_obj = object::address_to_object<token::Token>(token_addr);
+        let token_address = object::object_address(&token);
+
+        let token_name = token::name(token);
 
         // Verify owner
         assert!(
-            object::is_owner(token_obj, owner_addr),
+            object::is_owner(token, owner_addr),
             error::permission_denied(E_NOT_AUTHORIZED)
         );
 
         // Retrieve the burn ref from storage
-        let CustomData { burn_ref } = move_from<CustomData>(token_addr);
+        let CustomData { burn_ref } = move_from<CustomData>(token_address);
         // Burn the token
         token::burn(burn_ref);
-
-        // Generate burn reference and burn
-        // let burn_ref = token::generate_burn_ref(&token_obj);
-        let token_name = token::name(token_obj);
 
         // Emit burn event
         let collection_addr =
             collection::create_collection_address(
-                &signer::address_of(owner), &string::utf8(b"My NFT Collection")
+                &collection_owner, &string::utf8(b"My NFT Collection")
             );
         let metadata = borrow_global_mut<CollectionMetadata>(collection_addr);
         event::emit_event(
