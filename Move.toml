@@ -4,7 +4,7 @@ version = "1.0.0"
 authors = []
 
 [addresses]
-CAFE = "0x2bb9552aa01f552baf0c56f3fdf653e5eb54cb6d03c5c2af55ba73d0729c5d5c"
+CAFE = "0xf51a62cba3bd6fe0d5e270633e44f71404c80d616fc304c015ccc4e749f82b83"
 
 [dev-addresses]
 
@@ -12,7 +12,7 @@ CAFE = "0x2bb9552aa01f552baf0c56f3fdf653e5eb54cb6d03c5c2af55ba73d0729c5d5c"
 
 [dependencies.AptosFramework]
 git = "https://github.com/aptos-labs/aptos-core.git"
-rev = "main"
+rev = "46bf426662e4dc1b9e7317fc7fc66594bfaf6edb"
 subdir = "aptos-move/framework/aptos-framework"
 
 [dependencies.AptosTokenObjects]

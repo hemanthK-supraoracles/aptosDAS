@@ -98,10 +98,10 @@ module CAFE::danft_example {
         let tracker = borrow_global_mut<MintTracker>(creator_addr);
 
         // Check if receiver has already minted
-        assert!(
-            !vector::contains(&tracker.minted_addresses, &receiver),
-            error::already_exists(E_ALREADY_MINTED)
-        );
+        // assert!(
+        //     !vector::contains(&tracker.minted_addresses, &receiver),
+        //     error::already_exists(E_ALREADY_MINTED)
+        // );
 
         // Mint the NFT
         let token_constructor_ref =
@@ -176,7 +176,9 @@ module CAFE::danft_example {
 
     // Burn an NFT
     public entry fun burn_nft(
-        owner: &signer, token: Object<Token>, collection_owner: address,
+        owner: &signer,
+        token: Object<Token>,
+        collection_owner: address
     ) acquires CollectionMetadata, CustomData {
         let owner_addr = signer::address_of(owner);
         let token_address = object::object_address(&token);
