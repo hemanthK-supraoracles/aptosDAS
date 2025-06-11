@@ -255,11 +255,6 @@ module CAFE::danft_example {
         // Perform transfer
         object::transfer(sender, token_obj, receiver);
 
-        // Emit transfer event
-        // let collection_addr =
-        //     collection::create_collection_address(
-        //         &signer::address_of(sender), &string::utf8(b"My NFT Collection")
-        //     );
         let metadata = borrow_global_mut<CollectionMetadata>(collection_addr);
         event::emit_event(
             &mut metadata.transfer_event_handle,
@@ -299,14 +294,8 @@ module CAFE::danft_example {
         );
 
         // Transfer to the target object's address
-        // let target_owner = object::owner(target_obj);
         object::transfer(sender, token_obj, target_object_addr);
 
-        // Emit transfer event
-        // let collection_addr =
-        //     collection::create_collection_address(
-        //         &collection_owner_address, &string::utf8(b"My NFT Collection")
-        //     );
         let metadata = borrow_global_mut<CollectionMetadata>(collection_addr);
         event::emit_event(
             &mut metadata.transfer_event_handle,
