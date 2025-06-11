@@ -123,16 +123,6 @@ module CAFE::olddanft_example {
         let creator_addr = signer::address_of(creator);
         assert!(exists<CollectionConfig>(creator_addr), E_COLLECTION_NOT_FOUND);
 
-        // let token_builder =
-        //     aptos_token::create(
-        //         creator,
-        //         collection_name,
-        //         description,
-        //         token_name,
-        //         option::none(),
-        //         uri
-        //     );
-
         aptos_token::mint(
             creator,
             collection_name,
