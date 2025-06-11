@@ -4,7 +4,7 @@ version = "1.0.0"
 authors = []
 
 [addresses]
-CAFE = "0xf51a62cba3bd6fe0d5e270633e44f71404c80d616fc304c015ccc4e749f82b83"
+CAFE = "0x2c2b6f259066f1653c6610b6ab8e2dfafbe8ff62ab61d8a563f48c1f8fb23bfd"
 
 [dev-addresses]
 

@@ -1,4 +1,4 @@
-module CAFE::danft_example {
+module CAFE::da_nft_example {
     use std::error;
     use std::signer;
     use std::string::{Self, String};
@@ -326,11 +326,11 @@ module CAFE::danft_example {
         );
 
         // Get the target object to transfer to
-        let target_obj = object::address_to_object<Token>(target_object_addr);
+        let target_obj = object::address_to_object<collection::Collection>(target_object_addr);
 
         // Verify the target object exists and belongs to target collection
         assert!(
-            object::object_exists<Token>(target_object_addr),
+            object::object_exists<collection::Collection>(target_object_addr),
             error::not_found(E_TARGET_OBJECT_NOT_FOUND)
         );
 

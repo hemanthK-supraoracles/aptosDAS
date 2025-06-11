@@ -1,0 +1,298 @@
+aptos init --network testnet --profile default
+
+Account 0x2c2b6f259066f1653c6610b6ab8e2dfafbe8ff62ab61d8a563f48c1f8fb23bfd has been already found on chain
+
+---
+Aptos CLI is now set up for account 0x2c2b6f259066f1653c6610b6ab8e2dfafbe8ff62ab61d8a563f48c1f8fb23bfd as profile zzz1!
+---
+
+---
+Aptos CLI is now set up for account 0x90615b819d95bdfee340e67a04027ad279739728fc5f5f236d53ac445241b737 as profile zzz2!
+---
+
+---
+Aptos CLI is now set up for account 0xb0f7953bd3ca2d5d0d3bfb94844087bd1ddeaca4152d5d243c4ce96087b2c7eb as profile zzz3!
+---
+
+---
+Aptos CLI is now set up for account 0x579a86459c48b9789b64b021988eafcfcecb0253ae2156d960cc12639a2886fb as profile zzz4!
+---
+
+---
+Aptos CLI is now set up for account 0x699bef930a802db28dcb8a4e2311ea8df7c6d830b167599d84966ccc30f8ca8d as profile yyy1!
+---
+
+
+
+aptos move compile --named-addresses CAFE=0x2c2b6f259066f1653c6610b6ab8e2dfafbe8ff62ab61d8a563f48c1f8fb23bfd
+aptos move publish --named-addresses CAFE=0x2c2b6f259066f1653c6610b6ab8e2dfafbe8ff62ab61d8a563f48c1f8fb23bfd
+
+Transaction submitted: https://explorer.aptoslabs.com/txn/0x81ff38d5248913cb32f04a8e7ab465e95f2404190c3727340cd82eca36acac6b?network=testnet
+{
+  "Result": {
+    "transaction_hash": "0x81ff38d5248913cb32f04a8e7ab465e95f2404190c3727340cd82eca36acac6b",
+    "gas_used": 8738,
+    "gas_unit_price": 100,
+    "sender": "2c2b6f259066f1653c6610b6ab8e2dfafbe8ff62ab61d8a563f48c1f8fb23bfd",
+    "sequence_number": 0,
+    "success": true,
+    "timestamp_us": 1749643977481160,
+    "version": 6782825988,
+    "vm_status": "Executed successfully"
+  }
+}
+
+
+
+aptos move run --function-id 0x2c2b6f259066f1653c6610b6ab8e2dfafbe8ff62ab61d8a563f48c1f8fb23bfd::da_nft_example::initialize_collection --profile zzz1
+Do you want to submit a transaction for a range of [158000 - 237000] Octas at a gas unit price of 100 Octas? [yes/no] >
+yes
+Transaction submitted: https://explorer.aptoslabs.com/txn/0x32d7af20ea5d7141ad5f21a6a527be4ba164d43fdae1d663646b56353ba023c8?network=testnet
+{
+  "Result": {
+    "transaction_hash": "0x32d7af20ea5d7141ad5f21a6a527be4ba164d43fdae1d663646b56353ba023c8",
+    "gas_used": 1580,
+    "gas_unit_price": 100,
+    "sender": "2c2b6f259066f1653c6610b6ab8e2dfafbe8ff62ab61d8a563f48c1f8fb23bfd",
+    "sequence_number": 1,
+    "success": true,
+    "timestamp_us": 1749644035326797,
+    "version": 6782826502,
+    "vm_status": "Executed successfully"
+  }
+}
+
+
+//// Minting nft by zzz1 and sending to zzz2
+aptos move run --function-id 0x2c2b6f259066f1653c6610b6ab8e2dfafbe8ff62ab61d8a563f48c1f8fb23bfd::da_nft_example::mint_nft  --args address:0x90615b819d95bdfee340e67a04027ad279739728fc5f5f236d53ac445241b737 string:"DESCRIPTION_NFT_1" string:"NAME_NFT_1" string:"https://example.com/nft.png"  --profile zzz1
+Do you want to submit a transaction for a range of [152000 - 228000] Octas at a gas unit price of 100 Octas? [yes/no] >
+yes
+Transaction submitted: https://explorer.aptoslabs.com/txn/0x8de3cfa451b4df528e4c544f87181d9a2c2446eac5432d9cc370573e6191eda3?network=testnet
+{
+  "Result": {
+    "transaction_hash": "0x8de3cfa451b4df528e4c544f87181d9a2c2446eac5432d9cc370573e6191eda3",
+    "gas_used": 1520,
+    "gas_unit_price": 100,
+    "sender": "2c2b6f259066f1653c6610b6ab8e2dfafbe8ff62ab61d8a563f48c1f8fb23bfd",
+    "sequence_number": 2,
+    "success": true,
+    "timestamp_us": 1749644396536156,
+    "version": 6782829735,
+    "vm_status": "Executed successfully"
+  }
+}
+
+token_minted : 0x7385e864be26869ac30caa68cead042d92aa10c1c8b711494332a5157278f6d2
+collection : 0xa3f40b905f0c192686f4b00499fb7d95cf9b546068dcafce5e696ad57c322e21
+
+
+
+//// Transfering minted nft from zzz2 to zzz3
+
+aptos move run --function-id 0x2c2b6f259066f1653c6610b6ab8e2dfafbe8ff62ab61d8a563f48c1f8fb23bfd::da_nft_example::transfer_nft --args address:0x7385e864be26869ac30caa68cead042d92aa10c1c8b711494332a5157278f6d2 address:0xb0f7953bd3ca2d5d0d3bfb94844087bd1ddeaca4152d5d243c4ce96087b2c7eb address:0xa3f40b905f0c192686f4b00499fb7d95cf9b546068dcafce5e696ad57c322e21 --profile zzz2
+Do you want to submit a transaction for a range of [50100 - 75100] Octas at a gas unit price of 100 Octas? [yes/no] >
+yes
+Transaction submitted: https://explorer.aptoslabs.com/txn/0x87ca93825ed514c3c7cf330c2b8bb5d83c06476f83e2cb1ef77d03f257f5e9d2?network=testnet
+{
+  "Result": {
+    "transaction_hash": "0x87ca93825ed514c3c7cf330c2b8bb5d83c06476f83e2cb1ef77d03f257f5e9d2",
+    "gas_used": 501,
+    "gas_unit_price": 100,
+    "sender": "90615b819d95bdfee340e67a04027ad279739728fc5f5f236d53ac445241b737",
+    "sequence_number": 0,
+    "success": true,
+    "timestamp_us": 1749644809344363,
+    "version": 6782833877,
+    "vm_status": "Executed successfully"
+  }
+}
+
+//// Mutate nft by changing description by zzz3
+
+aptos move run --function-id 0x2c2b6f259066f1653c6610b6ab8e2dfafbe8ff62ab61d8a563f48c1f8fb23bfd::da_nft_example::mutate_nft_description --args address:0x7385e864be26869ac30caa68cead042d92aa10c1c8b711494332a5157278f6d2 address:0xa3f40b905f0c192686f4b00499fb7d95cf9b546068dcafce5e696ad57c322e21 string:"Mutated description!" --profile zzz3
+Do you want to submit a transaction for a range of [50300 - 75400] Octas at a gas unit price of 100 Octas? [yes/no] >
+yes
+Transaction submitted: https://explorer.aptoslabs.com/txn/0xd12e3de3fdd84664c48c5f82c393d6b4807dd07ba86041addaa891cda0040174?network=testnet
+{
+  "Result": {
+    "transaction_hash": "0xd12e3de3fdd84664c48c5f82c393d6b4807dd07ba86041addaa891cda0040174",
+    "gas_used": 503,
+    "gas_unit_price": 100,
+    "sender": "b0f7953bd3ca2d5d0d3bfb94844087bd1ddeaca4152d5d243c4ce96087b2c7eb",
+    "sequence_number": 0,
+    "success": true,
+    "timestamp_us": 1749645183798241,
+    "version": 6782838016,
+    "vm_status": "Executed successfully"
+  }
+}
+
+
+//// Burn nft by zzz3
+aptos move run --function-id 0x2c2b6f259066f1653c6610b6ab8e2dfafbe8ff62ab61d8a563f48c1f8fb23bfd::da_nft_example::burn_nft --args address:0x7385e864be26869ac30caa68cead042d92aa10c1c8b711494332a5157278f6d2 address:0xa3f40b905f0c192686f4b00499fb7d95cf9b546068dcafce5e696ad57c322e21 --profile zzz3
+Do you want to submit a transaction for a range of [1000 - 1500] Octas at a gas unit price of 100 Octas? [yes/no] >
+yes
+Transaction submitted: https://explorer.aptoslabs.com/txn/0x9e4dee282c6cfc74e56a8d35021a2905b17e129265a835ca6cc32f8906454f78?network=testnet
+{
+  "Result": {
+    "transaction_hash": "0x9e4dee282c6cfc74e56a8d35021a2905b17e129265a835ca6cc32f8906454f78",
+    "gas_used": 10,
+    "gas_unit_price": 100,
+    "sender": "b0f7953bd3ca2d5d0d3bfb94844087bd1ddeaca4152d5d243c4ce96087b2c7eb",
+    "sequence_number": 1,
+    "success": true,
+    "timestamp_us": 1749645435723942,
+    "version": 6782840766,
+    "vm_status": "Executed successfully"
+  }
+}
+
+
+//// Now mint 2 new nft  && step 3: transfer one nft to another nft {TESTS}
+aptos move run --function-id 0x2c2b6f259066f1653c6610b6ab8e2dfafbe8ff62ab61d8a563f48c1f8fb23bfd::da_nft_example::mint_nft  --args address:0x90615b819d95bdfee340e67a04027ad279739728fc5f5f236d53ac445241b737 string:"DESCRIPTION_NFT_2" string:"NAME_NFT_2" string:"https://example.com/nft.png"  --profile zzz1
+Do you want to submit a transaction for a range of [152000 - 228000] Octas at a gas unit price of 100 Octas? [yes/no] >
+yes
+Transaction submitted: https://explorer.aptoslabs.com/txn/0x5ef22c20b3d67e88f53c5c301a677ceb7cfed2d5a794c3745a064050b0c8c303?network=testnet
+{
+  "Result": {
+    "transaction_hash": "0x5ef22c20b3d67e88f53c5c301a677ceb7cfed2d5a794c3745a064050b0c8c303",
+    "gas_used": 1520,
+    "gas_unit_price": 100,
+    "sender": "2c2b6f259066f1653c6610b6ab8e2dfafbe8ff62ab61d8a563f48c1f8fb23bfd",
+    "sequence_number": 3,
+    "success": true,
+    "timestamp_us": 1749645634173578,
+    "version": 6782842746,
+    "vm_status": "Executed successfully"
+  }
+}
+
+token_minted A : 0xa91a4bf6d3f9215b47781eff8980ec03302878826f82feac20f3e7e7a0de9f31
+collection: 0xa3f40b905f0c192686f4b00499fb7d95cf9b546068dcafce5e696ad57c322e21
+
+// Step 2 minting 2nd NFT
+aptos move run --function-id 0x2c2b6f259066f1653c6610b6ab8e2dfafbe8ff62ab61d8a563f48c1f8fb23bfd::da_nft_example::mint_nft  --args address:0x2c2b6f259066f1653c6610b6ab8e2dfafbe8ff62ab61d8a563f48c1f8fb23bfd string:"DESCRIPTION_NFT_3" string:"NAME_NFT_3" string:"https://example.com/nft.png"  --profile zzz1
+Do you want to submit a transaction for a range of [152000 - 228000] Octas at a gas unit price of 100 Octas? [yes/no] >
+yes
+Transaction submitted: https://explorer.aptoslabs.com/txn/0xec625019117823ac8bde697727ddee4dc502fbd202dc2a8a009d0dae814e210e?network=testnet
+{
+  "Result": {
+    "transaction_hash": "0xec625019117823ac8bde697727ddee4dc502fbd202dc2a8a009d0dae814e210e",
+    "gas_used": 1520,
+    "gas_unit_price": 100,
+    "sender": "2c2b6f259066f1653c6610b6ab8e2dfafbe8ff62ab61d8a563f48c1f8fb23bfd",
+    "sequence_number": 4,
+    "success": true,
+    "timestamp_us": 1749645807443554,
+    "version": 6782844649,
+    "vm_status": "Executed successfully"
+  }
+}
+
+token_minted B: 0xca1e64cb62b13cca89df7cff8d89cc50c86988e6c6fd7871a7f5097def077252
+collection: 0xa3f40b905f0c192686f4b00499fb7d95cf9b546068dcafce5e696ad57c322e21
+
+// Step3 : transfer one nft {B} to another nft {A}
+
+aptos move run --function-id 0x2c2b6f259066f1653c6610b6ab8e2dfafbe8ff62ab61d8a563f48c1f8fb23bfd::da_nft_example::transfer_nft_to_nft --args address:0xca1e64cb62b13cca89df7cff8d89cc50c86988e6c6fd7871a7f5097def077252 address:0xa3f40b905f0c192686f4b00499fb7d95cf9b546068dcafce5e696ad57c322e21 address:0xa91a4bf6d3f9215b47781eff8980ec03302878826f82feac20f3e7e7a0de9f31  --profile zzz1
+Do you want to submit a transaction for a range of [1000 - 1500] Octas at a gas unit price of 100 Octas? [yes/no] >
+yes
+Transaction submitted: https://explorer.aptoslabs.com/txn/0x26aa2f33480f610ef61362eb8503d1f7fc6cc0eeb62ff4d204fd2e64e3f38080?network=testnet
+{
+  "Result": {
+    "transaction_hash": "0x26aa2f33480f610ef61362eb8503d1f7fc6cc0eeb62ff4d204fd2e64e3f38080",
+    "gas_used": 10,
+    "gas_unit_price": 100,
+    "sender": "2c2b6f259066f1653c6610b6ab8e2dfafbe8ff62ab61d8a563f48c1f8fb23bfd",
+    "sequence_number": 5,
+    "success": true,
+    "timestamp_us": 1749646101648323,
+    "version": 6782847879,
+    "vm_status": "Executed successfully"
+  }
+}
+
+
+
+//// Mint another nft to zzz1 and send it to collection of another user (zzz3)
+aptos move run --function-id 0x2c2b6f259066f1653c6610b6ab8e2dfafbe8ff62ab61d8a563f48c1f8fb23bfd::da_nft_example::mint_nft  --args address:0x2c2b6f259066f1653c6610b6ab8e2dfafbe8ff62ab61d8a563f48c1f8fb23bfd string:"DESCRIPTION_NFT_4" string:"NAME_NFT_4" string:"https://example.com/nft.png"  --profile zzz1
+Do you want to submit a transaction for a range of [152000 - 228000] Octas at a gas unit price of 100 Octas? [yes/no] >
+yes
+Transaction submitted: https://explorer.aptoslabs.com/txn/0xe8cabdafe3b68a037b6d67a4db59131349f9cba603ebc3b45bf5636561b176a8?network=testnet
+{
+  "Result": {
+    "transaction_hash": "0xe8cabdafe3b68a037b6d67a4db59131349f9cba603ebc3b45bf5636561b176a8",
+    "gas_used": 1520,
+    "gas_unit_price": 100,
+    "sender": "2c2b6f259066f1653c6610b6ab8e2dfafbe8ff62ab61d8a563f48c1f8fb23bfd",
+    "sequence_number": 6,
+    "success": true,
+    "timestamp_us": 1749646390818922,
+    "version": 6782850829,
+    "vm_status": "Executed successfully"
+  }
+}
+
+token_minted {C} : 0xe489eb0e78741dc339b1da37213a245e3ba652387358dbdf8a01fed3c773896a
+collection: 0xa3f40b905f0c192686f4b00499fb7d95cf9b546068dcafce5e696ad57c322e21
+
+//now initialize_collection for another user (zzz3)
+aptos move run --function-id 0x2c2b6f259066f1653c6610b6ab8e2dfafbe8ff62ab61d8a563f48c1f8fb23bfd::da_nft_example::initialize_collection --profile zzz3
+Do you want to submit a transaction for a range of [158000 - 237000] Octas at a gas unit price of 100 Octas? [yes/no] >
+yes
+Transaction submitted: https://explorer.aptoslabs.com/txn/0xdc98fb38aa291921a18df4edfa8e83fdf3dd8e7a8360fcfe2abfaff73d6e3b94?network=testnet
+{
+  "Result": {
+    "transaction_hash": "0xdc98fb38aa291921a18df4edfa8e83fdf3dd8e7a8360fcfe2abfaff73d6e3b94",
+    "gas_used": 1580,
+    "gas_unit_price": 100,
+    "sender": "b0f7953bd3ca2d5d0d3bfb94844087bd1ddeaca4152d5d243c4ce96087b2c7eb",
+    "sequence_number": 2,
+    "success": true,
+    "timestamp_us": 1749646640846862,
+    "version": 6782853243,
+    "vm_status": "Executed successfully"
+  }
+}
+
+/// Minting a sample token for user zzz3
+aptos move run --function-id 0x2c2b6f259066f1653c6610b6ab8e2dfafbe8ff62ab61d8a563f48c1f8fb23bfd::da_nft_example::mint_nft  --args address:0xb0f7953bd3ca2d5d0d3bfb94844087bd1ddeaca4152d5d243c4ce96087b2c7eb string:"DESCRIPTION_NFT_5" string:"NAME_NFT_5" string:"https://example.com/nft.png"  --profile zzz3
+Do you want to submit a transaction for a range of [152000 - 228000] Octas at a gas unit price of 100 Octas? [yes/no] >
+yes
+Transaction submitted: https://explorer.aptoslabs.com/txn/0x8684a778fa6214a0857d49fdeaa5289497a603e29780b1a5290531e1f4d356c7?network=testnet
+{
+  "Result": {
+    "transaction_hash": "0x8684a778fa6214a0857d49fdeaa5289497a603e29780b1a5290531e1f4d356c7",
+    "gas_used": 1520,
+    "gas_unit_price": 100,
+    "sender": "b0f7953bd3ca2d5d0d3bfb94844087bd1ddeaca4152d5d243c4ce96087b2c7eb",
+    "sequence_number": 3,
+    "success": true,
+    "timestamp_us": 1749647011385626,
+    "version": 6782856919,
+    "vm_status": "Executed successfully"
+  }
+}
+
+token minted : 0x6fc7ad70e62343db31877273a264aed39498d5ec77edd3fe7eaaae2e88978583
+collection {B} belongs to zzz3:  0x44e395241f72cc2bfab3560aefe2b331a3daa5cfe66e86f2389f41ebcb1ad900
+
+/// Now send token {C} to collection {B} of zzz3
+
+ aptos move run --function-id 0x2c2b6f259066f1653c6610b6ab8e2dfafbe8ff62ab61d8a563f48c1f8fb23bfd::da_nft_example::transfer_nft_to_collection --args address:0xe489eb0e78741dc339b1da37213a245e3ba652387358dbdf8a01fed3c773896a address:0xa3f40b905f0c192686f4b00499fb7d95cf9b546068dcafce5e696ad57c322e21 address:0x44e395241f72cc2bfab3560aefe2b331a3daa5cfe66e86f2389f41ebcb1ad900 --profile zzz1
+Do you want to submit a transaction for a range of [1000 - 1500] Octas at a gas unit price of 100 Octas? [yes/no] >
+yes
+Transaction submitted: https://explorer.aptoslabs.com/txn/0x3f21958d6eb36e93b57c7b99e7ba74d25d078fdd6eb3dd820151470e27ae7269?network=testnet
+{
+  "Result": {
+    "transaction_hash": "0x3f21958d6eb36e93b57c7b99e7ba74d25d078fdd6eb3dd820151470e27ae7269",
+    "gas_used": 10,
+    "gas_unit_price": 100,
+    "sender": "2c2b6f259066f1653c6610b6ab8e2dfafbe8ff62ab61d8a563f48c1f8fb23bfd",
+    "sequence_number": 8,
+    "success": true,
+    "timestamp_us": 1749647941936676,
+    "version": 6782865805,
+    "vm_status": "Executed successfully"
+  }
+}
