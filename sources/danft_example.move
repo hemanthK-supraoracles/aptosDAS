@@ -447,7 +447,6 @@ module CAFE::danft_example {
     //// SHARING OF TOKENS
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /// Fractionalize a token into shares
-    /// Fractionalize a token into shares
     public entry fun fractionalize_token(
         owner: &signer,
         token: Object<Token>,
@@ -456,13 +455,13 @@ module CAFE::danft_example {
     ) {
         let owner_addr = signer::address_of(owner);
 
-        // Verify owner owns the token
+        // Verify ownership
         assert!(
             object::is_owner(token, owner_addr),
             error::permission_denied(E_NOT_AUTHORIZED)
         );
 
-        // Verify input validity (same as before)
+        // Validate inputs
         let recipient_count = vector::length(&recipients);
         let percentage_count = vector::length(&share_percentages);
         assert!(
@@ -471,7 +470,7 @@ module CAFE::danft_example {
         );
         assert!(recipient_count > 0, error::invalid_argument(E_INVALID_SHARE_COUNT));
 
-        // Verify percentages sum to 10000 (100%)
+        // Sum must be 10000
         let total_percentage = 0u64;
         let i = 0;
         while (i < percentage_count) {
@@ -481,32 +480,10 @@ module CAFE::danft_example {
         };
         assert!(total_percentage == 10000, error::invalid_argument(E_INVALID_PERCENTAGE));
 
-        // Initialize shares table and shareholders vector
+        // Prepare data
         let shares = smart_table::new<address, u64>();
         let shareholders = vector::empty<address>();
-        let constructor_ref = object::create_object(owner_addr);
-        let object_signer = object::generate_signer(&constructor_ref);
-        let extend_ref = object::generate_extend_ref(&constructor_ref);
 
-        // Create the FractionalToken **once** before the loop
-        let fractional_token_obj =
-            object::object_from_constructor_ref<FractionalToken>(&constructor_ref);
-
-        // Store the FractionalToken under the owner's address
-        move_to(
-            &object_signer,
-            FractionalToken {
-                token,
-                total_shares: 10000,
-                shares,
-                shareholders,
-                original_owner: owner_addr,
-                extend_ref,
-                created_at: timestamp::now_seconds()
-            }
-        );
-
-        // Distribute shares to recipients
         let j = 0;
         while (j < recipient_count) {
             let recipient = *vector::borrow(&recipients, j);
@@ -514,20 +491,45 @@ module CAFE::danft_example {
 
             smart_table::add(&mut shares, recipient, percentage);
             vector::push_back(&mut shareholders, recipient);
+            j = j + 1;
+        };
 
-            // Create share ownership record for recipient (store only the Object<FractionalToken>)
+        // Now safe to create FractionalToken object
+        let constructor_ref = object::create_object(owner_addr);
+        let object_signer = object::generate_signer(&constructor_ref);
+        let extend_ref = object::generate_extend_ref(&constructor_ref);
+
+        let fractional_token = FractionalToken {
+            token,
+            total_shares: 10000,
+            shares, // safe: built fully before use
+            shareholders,
+            original_owner: owner_addr,
+            extend_ref,
+            created_at: timestamp::now_seconds()
+        };
+
+        move_to(&object_signer, fractional_token);
+
+        let fractional_token_obj =
+            object::object_from_constructor_ref<FractionalToken>(&constructor_ref);
+
+        // Distribute share ownership + emit events
+        let k = 0;
+        while (k < recipient_count) {
+            let recipient = *vector::borrow(&recipients, k);
+            let percentage = *vector::borrow(&share_percentages, k);
+
             let share_ownership = ShareOwnership {
-                fractional_token: fractional_token_obj, // Just the object reference, not a new object
+                fractional_token: fractional_token_obj,
                 share_percentage: percentage,
                 acquired_at: timestamp::now_seconds()
             };
-
             let constructor_ref_recipient = object::create_object(recipient);
             let object_signer_recipient =
                 object::generate_signer(&constructor_ref_recipient);
             move_to(&object_signer_recipient, share_ownership);
 
-            // Emit share distribution event
             emit(
                 SharesDistributedEvent {
                     fractional_token: fractional_token_obj,
@@ -537,10 +539,9 @@ module CAFE::danft_example {
                 }
             );
 
-            j = j + 1;
+            k = k + 1;
         };
 
-        // Emit fractionalization event
         emit(
             TokenFractionalizedEvent {
                 token,
